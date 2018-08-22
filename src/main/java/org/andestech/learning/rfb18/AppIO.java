@@ -37,4 +37,51 @@ public class AppIO {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+// Binary
+
+        try (FileOutputStream fos =
+                new FileOutputStream(myCat+"file2.txt")) {
+
+            String data = "Нервы у Парка сжались в тугой комок. Он с трудом подавил в себе\n надвигающийся панический ужас. Сдерживая себя, он не спеша включил силовое поле, и голубой шар окутал его.\n" +
+                    " Парк схватил пистолет, из которого Эдсель убил Факсона, и почувствовал,\n как удобно легла в его руку прикладистая рукоятка. Чудовище приближалось.\n Парк нажал на кнопку, и из дула вырвался прямой луч";
+
+            byte[] arr = data.getBytes("utf8");
+            fos.write(arr);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+   // читатель
+
+        try (FileInputStream fos =
+                     new FileInputStream(myCat+"file2.txt")) {
+
+//            String data = "Нервы у Парка сжались в тугой комок. Он с трудом подавил в себе\n надвигающийся панический ужас. Сдерживая себя, он не спеша включил силовое поле, и голубой шар окутал его.\n" +
+//                    " Парк схватил пистолет, из которого Эдсель убил Факсона, и почувствовал,\n как удобно легла в его руку прикладистая рукоятка. Чудовище приближалось.\n Парк нажал на кнопку, и из дула вырвался прямой луч";
+
+            byte[] arr = new byte[fos.available()];
+
+            fos.read(arr);
+
+            System.out.println(new String(arr,"utf8"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+// Binary
+
+        try(DataOutputStream dos =
+                new DataOutputStream(
+                        new FileOutputStream(myCat+"file3.bin")))
+        {
+           dos.writeDouble(123.456789);
+           dos.writeInt(77777777);
+           dos.writeLong(28347928479287L);
+
+        }
+        catch (IOException ex){ex.printStackTrace();}
+
+
     }}
