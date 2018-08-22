@@ -1,6 +1,7 @@
 package org.andestech.learning.rfb18;
 
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -39,15 +40,18 @@ class Driver{
         System.out.println("Internal works....!!!");
 
     }
+
+    public String getData(){return driverDate;}
 }
 
 
 public class AppRefl {
 
 
-    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
+    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException, NoSuchFieldException {
 
         Driver driver = new Driver();
+        System.out.println("data: " + driver.getData());
 
         Class<?> dd = Driver.class;
 
@@ -61,6 +65,11 @@ public class AppRefl {
             }
         }
 
+        Field f1 = dd.getDeclaredField("driverDate");
+        f1.setAccessible(true);
+
+        f1.set(driver,"you hacked!!!)))");
+        System.out.println(f1.get(driver));
     }
 
 }
