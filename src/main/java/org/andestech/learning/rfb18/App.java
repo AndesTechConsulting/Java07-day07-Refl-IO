@@ -5,6 +5,8 @@ import java.lang.annotation.Annotation;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
 
 import java.lang.reflect.*;
 
@@ -12,6 +14,9 @@ import java.lang.reflect.*;
 enum AccountTypes
 { UserAccount, IOTAccount, VirtualAccount, ABSAccount; }
 
+
+enum LogLevels
+{NotLogged, Minimal, Medium, All;}
 //@Documented
 
 
@@ -24,26 +29,33 @@ enum AccountTypes
 @Retention(RetentionPolicy.RUNTIME)
 @interface Logging
 {
-    boolean isLogged() default true;
+    LogLevels value() default LogLevels.NotLogged;
 }
 
 @Retention(RetentionPolicy.RUNTIME)
 @interface Active
 {}
 
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+@interface methDatas
+{}
+
 
 @AccountType(acctype=AccountTypes.UserAccount)
-@Logging
+@Logging(LogLevels.Medium)
 @Active
 class Account
 {
     private int id;
     //...
 
+    @methDatas
     public int getId(){return id;}
 
 }
 
+//@methDatas
 public class App 
 {
     public static void main( String[] args )
